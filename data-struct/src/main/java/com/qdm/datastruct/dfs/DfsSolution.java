@@ -3,52 +3,24 @@ package com.qdm.datastruct.dfs;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
 public class DfsSolution {
 
 
+
     /**
-     * 1、求给定数字的全排
+     * 求给定数字的全排
      */
     @Test
-    public void getNumberCombination() {
-        int[] nums = {1, 2, 3, 4};
-        boolean[] visited = {false, false, false, false};
-        Stack<Integer> stack = new Stack<>();
-        getNumberCombinationDfs(nums, 0, visited, stack);
-
+    public  void listNums() {
+        int[] nums = {1,2,3};
+        boolean[] visited = new boolean[nums.length];
+        listNumsDfs(nums, 0, visited, new Stack<>());
     }
 
-    /**
-     * @param nums    给定的数字
-     * @param level   当前的层级
-     * @param visited 当前是否已经计算
-     * @param res     本次的结果
-     *                0                                            0
-     *                <p>
-     *                1                    1                         2                       3
-     *                2             2            3            1           3           1           2
-     *                3        3                    2      3                  1    2                1
-     */
-    private void getNumberCombinationDfs(int[] nums, int level, boolean[] visited, Stack<Integer> res) {
-        if (nums.length == level) {
-            System.out.println("res = " + res);
-            return;
-        }
-
-        for (int i = 0; i < nums.length; i++) {
-            int data = nums[i];
-            if (!visited[i]) {
-                res.push(data);
-                visited[i] = true;
-                getNumberCombinationDfs(nums, level + 1, visited, res);
-                visited[i] = false;
-                res.pop();
-            }
-        }
-    }
 
 
     @Test
@@ -81,6 +53,46 @@ public class DfsSolution {
         }
 
     }
+
+
+
+
+    /**
+     * 深度优先搜索方法，用于生成给定数字的全排列
+     * @param nums    给定的数字数组
+     * @param level   当前递归的层级
+     * @param visited 布尔数组，记录数字是否已被访问
+     * @param res     当前排列结果栈
+     */
+    private void listNumsDfs(int[] nums, int level, boolean[] visited, Stack<Integer> res) {
+        // 如果当前层级等于数字数组的长度，说明已经生成了一个完整的排列，打印结果
+        if (nums.length == level) {
+            System.out.println(res);
+        }
+        // 遍历数字数组中的每个数字
+        for (int i = 0; i < nums.length; i++) {
+            // 如果当前数字未被访问过
+            if (visited[i] == false) {
+                // 将当前数字压入结果栈
+                res.push(nums[i]);
+                // 标记当前数字已被访问
+                visited[i] = true;
+                // 打印当前状态：入栈操作，当前层级，当前数字索引，访问状态数组，结果栈
+                System.out.println("++++入栈：level=" + level + ", i = " + i + ", visited=" + Arrays.toString(visited) + ", res=" + res);
+
+                // 递归调用listNumsDfs方法，继续生成下一个层级的排列
+                listNumsDfs(nums, level + 1, visited, res);
+                // 回溯：将当前数字标记为未访问
+                visited[i] = false;
+                // 将当前数字从结果栈中弹出
+                res.pop();
+                // 打印当前状态：出栈操作，当前层级，当前数字索引，访问状态数组，结果栈
+                System.out.println("---出栈：level=" + level + ", i = " + i + ", visited=" + Arrays.toString(visited) + ", res=" + res);
+            }
+        }
+    }
+
+
 
 
 

@@ -50,11 +50,9 @@ public class HttpClientTests {
             System.out.println("entity.getContent() = " + entity.getContent());
             System.out.println("res = " + res);
             System.out.println("response = " + response);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         } finally {
             if (response != null) {
